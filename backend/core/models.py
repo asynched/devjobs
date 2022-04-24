@@ -2,11 +2,15 @@ from uuid import uuid4
 from django.db import models
 
 
+def upload_image_to(_instance, filename: str):
+    return f"static/images/{uuid4()}_{filename}"
+
+
 class Company(models.Model):
     id = models.UUIDField(primary_key=True, editable=False, default=uuid4)
     name = models.CharField(max_length=100)
-    address = models.CharField(max_length=100)
-    image = models.ImageField(upload_to="company_images")
+    country = models.CharField(max_length=100)
+    image = models.ImageField(upload_to=upload_image_to)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
