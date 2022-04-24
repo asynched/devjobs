@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind utilities;
+@tailwind components;
+
+@layer utilities {
+  .wrapper {
+    @apply mx-auto max-w-screen-lg;
+  }
+}
