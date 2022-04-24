@@ -11,12 +11,17 @@
     "axios": "^0.26.1",
     "blackbox.js": "^1.0.2",
     "react": "^18.0.0",
-    "react-dom": "^18.0.0"
+    "react-dom": "^18.0.0",
+    "react-router-dom": "^6.3.0"
   },
   "devDependencies": {
+    "@types/node": "^17.0.25",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
     "@vitejs/plugin-react": "^1.3.0",
+    "autoprefixer": "^10.4.5",
+    "postcss": "^8.4.12",
+    "tailwindcss": "^3.0.24",
     "typescript": "^4.6.3",
     "vite": "^2.9.5"
   }
