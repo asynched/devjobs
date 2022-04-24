@@ -45,9 +45,7 @@ export default function Home() {
                 alt={job.company.name}
               />
             </div>
-            <h3 className="mb-2">
-              {job.full_time ? 'Full time' : 'Part time'}
-            </h3>
+            <h3 className="mb-2">{job.fullTime ? 'Full time' : 'Part time'}</h3>
             <h2 className="text-xl text-gray-800 font-bold tracking-tighter">
               {job.title}
             </h2>
