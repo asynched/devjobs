@@ -1,7 +1,7 @@
 # [Backend]
 **/venv
 **/__pycache__
-**/company_images
+**/static
 
 *.sqlite3
 *.pyc
