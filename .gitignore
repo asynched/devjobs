@@ -1,0 +1,10 @@
+# [Backend]
+**/venv
+**/__pycache__
+
+*.sqlite3
+*.pyc
+
+# [Web]
+**/build
+**/node_modules
