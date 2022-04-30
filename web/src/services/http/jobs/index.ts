@@ -1,4 +1,5 @@
 import API from '@/services/http/api'
+import autocompleteAPI from '@/services/http/autocomplete'
 
 function parseJob(job: API.RawJob): API.Job {
   return {
@@ -16,4 +17,16 @@ export async function getJobs(): Promise<API.Job[]> {
 export async function getJob(id: string): Promise<API.Job> {
   const { data } = await API.get<API.RawJob>(`/jobs/${id}`)
   return parseJob(data)
+}
+
+export async function getAutocompleteSuggestions(
+  query: string
+): Promise<API.Job[]> {
+  const { data } = await autocompleteAPI.get('/autocomplete', {
+    params: {
+      q: query,
+    },
+  })
+
+  return data.map(parseJob)
 }

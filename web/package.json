@@ -12,9 +12,11 @@
     "blackbox.js": "^1.0.2",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
+    "react-markdown": "^8.0.3",
     "react-router-dom": "^6.3.0"
   },
   "devDependencies": {
+    "@tailwindcss/typography": "^0.5.2",
     "@types/node": "^17.0.25",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",

@@ -1,10 +1,31 @@
-import appBox, { loadJobs } from '@/stores/app'
-import { cloneMany } from '@/utils/arrays'
-import { useDerivedBox } from 'blackbox.js'
 import { useEffect } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { useDerivedBox } from 'blackbox.js'
+
+import { cloneMany } from '@/utils/arrays'
+
+import useInput from '@/hooks/useInput'
+import useDebounce from '@/hooks/useDebounce'
+
+import appBox, { loadJobs, loadAutocompleteJobs } from '@/stores/app'
+
+import Header from '@/components/common/Header'
+import Title from '@/components/utils/Title'
 
 export default function Home() {
   const jobs = useDerivedBox(appBox, (state) => state.jobs)
+  const autocompleteJobs = useDerivedBox(
+    appBox,
+    (state) => state.autocompleteJobs
+  )
+  const queryJobs = useDebounce(loadAutocompleteJobs, 1000)
+  const [inputValue, inputRegistration] = useInput('')
+
+  useEffect(() => {
+    if (inputValue.trim().length) {
+      queryJobs(inputValue)
+    }
+  }, [inputValue])
 
   useEffect(() => {
     loadJobs()
@@ -12,29 +33,32 @@ export default function Home() {
 
   return (
     <div className="w-full min-h-screen bg-gray-100 text-gray-600">
-      <header className="bg-blue-600 rounded-bl-full">
-        <div className="py-12 wrapper">
-          <h1 className="mb-4 text-white text-4xl font-bold tracking-tighter">
-            devjobs
-          </h1>
-        </div>
-      </header>
+      <Title title="DevJobs | Home" />
+      <Header />
       <section className="-mt-8 my-16 wrapper">
-        <form className="py-3 px-4 flex gap-8 justify-between rounded-lg bg-white shadow-sm">
+        <form className="relative py-3 px-4 flex gap-8 justify-between rounded-lg bg-white shadow-sm">
           <input
+            list="jobs"
             className="w-full outline-none"
             type="text"
             placeholder="Filter by title, companies, expertise or location..."
+            {...inputRegistration}
           />
+          <datalist onChange={console.log} id="jobs">
+            {autocompleteJobs.map((job) => (
+              <option key={job.id}>{job.title}</option>
+            ))}
+          </datalist>
 
           <button className="py-2 px-4 text-white bg-gradient-to-r from-blue-600 to-indigo-600 rounded">
             Search
           </button>
         </form>
       </section>
-      <section className="wrapper grid grid-cols-3 gap-8">
+      <section className="mb-12 wrapper grid md:grid-cols-2 lg:grid-cols-3 gap-8">
         {cloneMany(jobs, 10).map((job) => (
-          <div
+          <Link
+            to={`jobs/${job.id}`}
             key={job.id + Math.random()}
             className="bg-white p-4 rounded-lg shadow-lg"
           >
@@ -45,13 +69,13 @@ export default function Home() {
                 alt={job.company.name}
               />
             </div>
-            <h3 className="mb-2">{job.fullTime ? 'Full time' : 'Part time'}</h3>
+            <p className="mb-2">{job.fullTime ? 'Full time' : 'Part time'}</p>
             <h2 className="text-xl text-gray-800 font-bold tracking-tighter">
               {job.title}
             </h2>
             <p className="mb-4">{job.company.name}</p>
             <p className="text-blue-600">{job.company.country}</p>
-          </div>
+          </Link>
         ))}
       </section>
     </div>
