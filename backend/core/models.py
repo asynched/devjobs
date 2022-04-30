@@ -11,6 +11,7 @@ class Company(models.Model):
     name = models.CharField(max_length=100)
     country = models.CharField(max_length=100)
     image = models.ImageField(upload_to=upload_image_to)
+    website = models.URLField(max_length=255)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
