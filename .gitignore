@@ -9,3 +9,4 @@
 # [Web]
 **/build
 **/node_modules
+**/data
